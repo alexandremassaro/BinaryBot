@@ -57,16 +57,24 @@ class User:
 
 
 class History:
-    def __init__(self, symbol, history={}):
+    def __init__(self, symbol, history=None):
+
         self.symbol = symbol
         self.training_prices = {}
         self.trained = False
         self.prices = {}
         self.last_prices = {}
+
+        if history is None:
+            self.add_history = {}
         self.add_history(history)
+
         self.neural_network = None
 
-    def add_history(self, history={}):
+    def add_history(self, history=None):
+        if history is None:
+            return
+
         for i in range(len(history["prices"])):
             if history["times"][i] not in self.last_prices.keys():
                 self.last_prices[str(history["times"][i])] = history["prices"][i]
